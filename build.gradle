@@ -34,15 +34,12 @@ dependencies {
 [compileTestKotlin2Js]*.configure {
     kotlinOptions.moduleKind = "umd"
     kotlinOptions.sourceMap = true
-    kotlinOptions.outputFile="web/pathalgorithm.js"
-
 }
 
 
 [compileKotlin2Js]*.configure {
     kotlinOptions.moduleKind = "umd"
     kotlinOptions.sourceMap = true
-    kotlinOptions.outputFile="web/pathalgorithm.js"
 }
 
 task populateNodeModules(type: Copy, dependsOn: compileKotlin2Js) {
