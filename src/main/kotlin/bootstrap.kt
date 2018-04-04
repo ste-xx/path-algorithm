@@ -1,7 +1,6 @@
 import algorithm.BreathFirstSearch
 import algorithm.PathFindingAlgorithm
 
-import algorithm.PathFindingAlgorithm.PathFindingResult
 import board.Board
 import board.angleLevelWithGoalOn_x13_y3
 import kotlinx.coroutines.experimental.launch
@@ -18,8 +17,8 @@ object Bootstrap {
                   boardFactory: (BoardUi) -> Board,
                   algorithm: PathFindingAlgorithm) {
         launch {
-            legendUi.draw()
             val board = boardFactory(boardUi)
+            legendUi.draw()
             algorithm.solve(board)
         }
     }
@@ -32,3 +31,5 @@ object Bootstrap {
     }
 
 }
+
+

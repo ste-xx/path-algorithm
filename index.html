@@ -6,18 +6,50 @@
     <script src="external/rough.js"></script>
 
     <style>
-        .flex{
-            display:flex;
+        @font-face {
+            font-family: xkcd-script;
+            src: url('xkcd-script.woff') format('woff');
+        }
+
+        body {
+            font-family: xkcd-script, serif;
+        }
+
+        /*adjust canvas then font-size*/
+        .header, .footer {
+            text-align: center;
+            font-size: 5vh;
+            height:5vh;
+        }
+
+        .legendDescription {
+            position: absolute;
+        }
+
+        .container {
+            display: flex;
+            margin-top: 25px;
         }
     </style>
 </head>
 <body>
 
-<div class="flex">
-    <canvas id="maze" width="1400" height="1200"></canvas>
-    <canvas id="legend" width="400" height="1200"></canvas>
-</div>
+<div class="header">Pathfinding Algorithm</div>
+<div class="container">
+    <div style="width:calc(100vw/5)">CONTROL</div>
+    <canvas id="maze" width="0" height="0"></canvas>
+    <div style="position: relative">
+        <div class="legendDescription emptyTile">Empty</div>
+        <div class="legendDescription startTile">Start</div>
+        <div class="legendDescription goalTile">Goal</div>
+        <div class="legendDescription watchedTile">Watched</div>
+        <div class="legendDescription visitedTile">Visited</div>
+        <div class="legendDescription wallTile">Wall</div>
 
+        <canvas id="legend" width="0" height="0"></canvas>
+    </div>
+</div>
+<div class="footer">by Stefan Breitenstein</div>
 
 <script src="web/kotlin.js"></script>
 <script src="web/kotlinx-coroutines-core.js"></script>

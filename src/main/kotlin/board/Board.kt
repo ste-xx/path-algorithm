@@ -6,6 +6,7 @@ import kotlin.reflect.KClass
 class Board private constructor(ui: BoardUi, tilesSupplier: () -> Array<Array<Tile>>) {
 
     data class BoardSize(val width: Int, val height: Int) {
+        constructor(tiles: Array<Array<Tile>>) : this(tiles.size, tiles[0].size)
         internal fun isInBoard(position: Position): Boolean = (position.x < width && position.y < height) && (position.x >= 0 && position.y >= 0)
     }
 
@@ -44,7 +45,8 @@ class Board private constructor(ui: BoardUi, tilesSupplier: () -> Array<Array<Ti
                 else -> c
             }
         }
-        boardSize = BoardSize(tiles.size, tiles[0].size)
+
+        boardSize = BoardSize(tiles);
         ui.draw(tiles)
         this.ui = ui
 
