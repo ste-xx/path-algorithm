@@ -3,7 +3,6 @@ package board
 import board.Board.*
 import level.*
 import tiles.*
-import ui.ConsoleUi
 import kotlin.test.*
 
 class BoardTest {
@@ -13,7 +12,7 @@ class BoardTest {
     @Test
     fun should_create_correct_board_size() {
 
-        val board = Board.createEmpty(BoardSize(10, 5), ConsoleUi)
+        val board = Board.createEmpty(BoardSize(10, 5), ConsoleBoard)
 
         assertEquals(BoardSize(10, 5), board.boardSize())
         assertEquals(EmptyTile(7, 4), board.getTileOn(7, 4))
@@ -113,7 +112,7 @@ class BoardTest {
 
     @Test
     fun should_create_an_exception_on_access_of_outside_the_board() {
-        val board = Board.createEmpty(BoardSize(10, 5), ConsoleUi)
+        val board = Board.createEmpty(BoardSize(10, 5), ConsoleBoard)
 
 
         assertFailsWith(BoardAccessException::class) {

@@ -4,7 +4,6 @@ import tiles.EmptyTile
 import tiles.GoalTile
 import tiles.StartTile
 import tiles.WallTile
-import ui.BoardUi
 
 fun Board.Factory.angleLevelWithGoalOn_x13_y3(ui: BoardUi): Board = Board.create(ui) {
     Array(15) { x ->

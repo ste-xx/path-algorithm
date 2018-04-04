@@ -1,7 +1,6 @@
 package board
 
 import tiles.*
-import ui.BoardUi
 import kotlin.reflect.KClass
 
 class Board private constructor(ui: BoardUi, tilesSupplier: () -> Array<Array<Tile>>) {
@@ -46,7 +45,7 @@ class Board private constructor(ui: BoardUi, tilesSupplier: () -> Array<Array<Ti
             }
         }
         boardSize = BoardSize(tiles.size, tiles[0].size)
-        ui.drawTiles(tiles)
+        ui.draw(tiles)
         this.ui = ui
 
     }
@@ -163,6 +162,6 @@ class Board private constructor(ui: BoardUi, tilesSupplier: () -> Array<Array<Ti
     }
 
     private fun drawUi() {
-        this.ui.drawTiles(tiles)
+        this.ui.draw(tiles)
     }
 }

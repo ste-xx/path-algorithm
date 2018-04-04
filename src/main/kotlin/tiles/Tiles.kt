@@ -2,7 +2,7 @@
 
 package tiles
 
-import ui.ShapeOptions
+import external.ShapeOptions
 
 interface Tile {
     val print: String

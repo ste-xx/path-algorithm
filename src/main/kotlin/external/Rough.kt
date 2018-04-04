@@ -1,4 +1,4 @@
-package ui
+package external
 
 import org.w3c.dom.HTMLCanvasElement
 

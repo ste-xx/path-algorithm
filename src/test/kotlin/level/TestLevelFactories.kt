@@ -3,9 +3,9 @@ package level
 import board.Board
 import tiles.Position
 import tiles.*
-import ui.ConsoleUi
+import board.ConsoleBoard
 
-fun Board.Factory.angleLevelWithGoalOn_x11_y1(): Board = Board.create(ConsoleUi) {
+fun Board.Factory.angleLevelWithGoalOn_x11_y1(): Board = Board.create(ConsoleBoard) {
     Array(15) { x ->
         Array(12) { y ->
             when {
@@ -19,7 +19,7 @@ fun Board.Factory.angleLevelWithGoalOn_x11_y1(): Board = Board.create(ConsoleUi)
     }
 }
 
-fun Board.Factory.angleLevelWithGoalOn_x13_y3(): Board = Board.create(ConsoleUi) {
+fun Board.Factory.angleLevelWithGoalOn_x13_y3(): Board = Board.create(ConsoleBoard) {
     Array(15) { x ->
         Array(12) { y ->
             when {
@@ -42,10 +42,10 @@ fun shortestPathForAngleLevelWithGoalOn_x13_y3(withStartTile: Boolean=true): Lis
 }
 
 
-fun Board.Factory.createWithConsoleUi(supplier: () -> Array<Array<Tile>>) = Board.create(ConsoleUi, supplier)
-fun Board.Factory.createEmptyWithConsoleUi(boardSize: Board.BoardSize) = Board.createEmpty(boardSize, ConsoleUi)
+fun Board.Factory.createWithConsoleUi(supplier: () -> Array<Array<Tile>>) = Board.create(ConsoleBoard, supplier)
+fun Board.Factory.createEmptyWithConsoleUi(boardSize: Board.BoardSize) = Board.createEmpty(boardSize, ConsoleBoard)
 
-fun Board.Factory.neighbourLevel(): Board = Board.create(ConsoleUi) {
+fun Board.Factory.neighbourLevel(): Board = Board.create(ConsoleBoard) {
     Array(3) { x ->
         Array(3) { y ->
             when {
@@ -59,7 +59,7 @@ fun Board.Factory.neighbourLevel(): Board = Board.create(ConsoleUi) {
     }
 }
 
-fun Board.Factory.wallLevel(): Board = Board.create(ConsoleUi) {
+fun Board.Factory.wallLevel(): Board = Board.create(ConsoleBoard) {
     Array(3) { x ->
         Array(3) { y ->
             when {
@@ -72,7 +72,7 @@ fun Board.Factory.wallLevel(): Board = Board.create(ConsoleUi) {
     }
 }
 
-fun Board.Factory.unsolvableWallLevel(): Board = Board.create(ConsoleUi) {
+fun Board.Factory.unsolvableWallLevel(): Board = Board.create(ConsoleBoard) {
     Array(3) { x ->
         Array(3) { y ->
             when {
