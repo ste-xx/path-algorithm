@@ -3,10 +3,11 @@ package board
 import tiles.*
 import kotlin.reflect.KClass
 
-class Board private constructor(ui: BoardUi, tilesSupplier: () -> Array<Array<Tile>>) {
+class Board private constructor(ui: BoardUi, initializer: Board.BoardInitializer) {
 
     data class BoardSize(val width: Int, val height: Int) {
         constructor(tiles: Array<Array<Tile>>) : this(tiles.size, tiles[0].size)
+
         internal fun isInBoard(position: Position): Boolean = (position.x < width && position.y < height) && (position.x >= 0 && position.y >= 0)
     }
 
@@ -14,16 +15,25 @@ class Board private constructor(ui: BoardUi, tilesSupplier: () -> Array<Array<Ti
         fun toList(): List<Tile> = listOf(top, right, bottom, left)
     }
 
+    data class BoardInitializer(val size: BoardSize, val producer: (x: Int, y: Int) -> Tile) {
+        internal fun create() = Array(size.width) { x ->
+            Array(size.height) { y ->
+                producer(x, y)
+            }
+        }
+    }
+
     class BoardInitException(s: String) : Throwable(s)
     class BoardAccessException(s: String) : Throwable(s)
     class BoardPathException(s: String) : Throwable(s)
     class BoardSetException(s: String) : Throwable(s)
 
-    private val tiles: Array<Array<Tile>> = tilesSupplier()
+    private val tiles: Array<Array<Tile>> = initializer.create()
     private val boardSize: BoardSize
     private val ui: BoardUi
 
     init {
+
         if (tiles.isEmpty())
             throw BoardInitException("Outer Array is empty")
         //check all tiles have same size
@@ -53,15 +63,13 @@ class Board private constructor(ui: BoardUi, tilesSupplier: () -> Array<Array<Ti
     }
 
     companion object Factory {
-        fun createEmpty(size: BoardSize, ui: BoardUi) = Board(ui) {
-            Array(size.width) { x ->
-                Array(size.height) { y ->
-                    EmptyTile(position = Position(x, y)) as Tile
-                }
-            }
-        }
 
-        fun create(ui: BoardUi, supplier: () -> Array<Array<Tile>>) = Board(ui, supplier)
+
+        fun createEmpty(ui: BoardUi, size: BoardSize) = Board(ui, BoardInitializer(size) { x, y ->
+            EmptyTile(x, y)
+        })
+
+        fun create(ui: BoardUi, initializer: BoardInitializer) = Board(ui, initializer)
     }
 
     fun boardSize(): BoardSize = boardSize

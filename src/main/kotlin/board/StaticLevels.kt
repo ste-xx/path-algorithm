@@ -1,13 +1,13 @@
 package board
 
+import board.Board.*
 import tiles.EmptyTile
 import tiles.GoalTile
 import tiles.StartTile
 import tiles.WallTile
 
-fun Board.Factory.angleLevelWithGoalOn_x13_y3(ui: BoardUi): Board = Board.create(ui) {
-    Array(15) { x ->
-        Array(12) { y ->
+fun Board.Factory.angleLevelWithGoalOn_x13_y3(ui: BoardUi) =
+        Board.create(ui, BoardInitializer(BoardSize(15, 12)) { x, y ->
             when {
                 (x == 13) and (y == 3) -> GoalTile(x, y)
                 (x in 3..12) and (y == 3) -> WallTile(x, y)
@@ -15,13 +15,11 @@ fun Board.Factory.angleLevelWithGoalOn_x13_y3(ui: BoardUi): Board = Board.create
                 (x == 2) and (y == 11) -> StartTile(x, y)
                 else -> EmptyTile(x, y)
             }
-        }
-    }
-}
+        })
 
-fun Board.Factory.weirdLevel(ui: BoardUi): Board = Board.create(ui) {
-    Array(15) { x ->
-        Array(10) { y ->
+
+fun Board.Factory.weirdLevel(ui: BoardUi) =
+        Board.create(ui, BoardInitializer(BoardSize(15, 10)) { x, y ->
             when {
                 (x == 5) and (y == 0) -> GoalTile(x, y)
                 (x == 6) and (y in 0..1) -> WallTile(x, y)
@@ -32,6 +30,4 @@ fun Board.Factory.weirdLevel(ui: BoardUi): Board = Board.create(ui) {
                 (x == 2) and (y == 9) -> StartTile(x, y)
                 else -> EmptyTile(x, y)
             }
-        }
-    }
-}
+        })

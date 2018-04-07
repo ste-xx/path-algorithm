@@ -8,11 +8,10 @@ import kotlin.test.*
 class BoardTest {
 
 
-
     @Test
     fun should_create_correct_board_size() {
 
-        val board = Board.createEmpty(BoardSize(10, 5), ConsoleBoard)
+        val board = Board.createEmpty(ConsoleBoard, BoardSize(10, 5))
 
         assertEquals(BoardSize(10, 5), board.boardSize())
         assertEquals(EmptyTile(7, 4), board.getTileOn(7, 4))
@@ -21,65 +20,41 @@ class BoardTest {
 
     @Test
     fun is_not_playable_with_multiple_start_tiles() {
-        assertFalse(Board.createWithConsoleUi {
-            Array(2) { x ->
-                Array(2) { y ->
-                    StartTile(x, y) as Tile
-                }
-            }
-        }.isPlayable())
+        assertFalse(Board.createWithConsoleUi(BoardInitializer(BoardSize(2, 2)) { x, y -> StartTile(x, y) }).isPlayable())
     }
 
     @Test
     fun is_not_playable_without_start_tiles() {
-        assertFalse(Board.createWithConsoleUi {
-            Array(2) { x ->
-                Array(2) { y ->
-                    when {
-                        x == 0 && y == 0 -> GoalTile(x, y)
-                        else -> EmptyTile(x, y)
-                    }
-                }
+        assertFalse(Board.createWithConsoleUi(BoardInitializer(BoardSize(2, 2)) { x, y ->
+            when {
+                x == 0 && y == 0 -> GoalTile(x, y)
+                else -> EmptyTile(x, y)
             }
-        }.isPlayable())
+        }).isPlayable())
     }
 
     @Test
     fun is_not_playable_with_multiple_goal_tiles() {
-        assertFalse(Board.createWithConsoleUi {
-            Array(2) { x ->
-                Array(2) { y ->
-                    GoalTile(x, y) as Tile
-                }
-            }
-        }.isPlayable())
+        assertFalse(Board.createWithConsoleUi(BoardInitializer(BoardSize(2, 2)) { x, y -> GoalTile(x, y) }).isPlayable())
     }
 
     @Test
     fun is_not_playable_without_goal_tiles() {
-        assertFalse(Board.createWithConsoleUi {
-            Array(2) { x ->
-                Array(2) { y ->
-                    when {
-                        x == 0 && y == 0 -> StartTile(x, y)
-                        else -> EmptyTile(x, y)
-                    }
-                }
+        assertFalse(Board.createWithConsoleUi(BoardInitializer(BoardSize(2, 2)) { x, y ->
+            when {
+                x == 0 && y == 0 -> StartTile(x, y)
+                else -> EmptyTile(x, y)
             }
-        }.isPlayable())
+        }).isPlayable())
     }
 
     @Test
     fun is_playable_with_start_and_goal_tile() {
-        assertTrue(Board.createWithConsoleUi({
-            Array(2) { x ->
-                Array(2) { y ->
-                    when {
-                        x == 0 && y == 0 -> StartTile(x, y)
-                        x == 0 && y == 1 -> GoalTile(x, y)
-                        else -> EmptyTile(x, y)
-                    }
-                }
+        assertTrue(Board.createWithConsoleUi(BoardInitializer(BoardSize(2, 2)) { x, y ->
+            when {
+                x == 0 && y == 0 -> StartTile(x, y)
+                x == 0 && y == 1 -> GoalTile(x, y)
+                else -> EmptyTile(x, y)
             }
         }).isPlayable())
     }
@@ -98,21 +73,11 @@ class BoardTest {
         assertFailsWith(BoardInitException::class) {
             Board.createEmptyWithConsoleUi(BoardSize(0, 5))
         }
-
-        assertFailsWith(BoardInitException::class) {
-            Board.createWithConsoleUi {
-                Array(15) { x ->
-                    Array(x + 1) { y ->
-                        EmptyTile(x, y) as Tile
-                    }
-                }
-            }
-        }
     }
 
     @Test
     fun should_create_an_exception_on_access_of_outside_the_board() {
-        val board = Board.createEmpty(BoardSize(10, 5), ConsoleBoard)
+        val board = Board.createEmpty(ConsoleBoard, BoardSize(10, 5))
 
 
         assertFailsWith(BoardAccessException::class) {
@@ -245,15 +210,15 @@ class BoardTest {
         val board = Factory.wallLevel()
 
         board.setPath(Path(Position(0, 0), Position(1, 0), Position(2, 0)))
-        assertEquals(StartTile(0,0),board.getTileOn(0,0),"StartTile is not modified")
-        assertEquals(PathTile(1,0),board.getTileOn(1,0),"EmptyTile to PathTile")
-        assertEquals(GoalTile(2,0),board.getTileOn(2,0),"GoalTile is not modified")
+        assertEquals(StartTile(0, 0), board.getTileOn(0, 0), "StartTile is not modified")
+        assertEquals(PathTile(1, 0), board.getTileOn(1, 0), "EmptyTile to PathTile")
+        assertEquals(GoalTile(2, 0), board.getTileOn(2, 0), "GoalTile is not modified")
 
         assertFailsWith(BoardPathException::class, "Can not set path through wall tile") {
             board.setPath(Path(Position(0, 1)))
         }
 
-        assertFailsWith(BoardPathException::class,"Can not set path outside of the board") {
+        assertFailsWith(BoardPathException::class, "Can not set path outside of the board") {
             board.setPath(Path(Position(-1, -1)))
         }
 

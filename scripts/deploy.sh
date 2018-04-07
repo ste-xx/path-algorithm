@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 set -e # halt script on error
-zip -r website.zip web external index.html
+zip -r website.zip web external index.html xkcd-script.woff
+
 curl -H "Content-Type: application/zip" \
      -H "Authorization: Bearer $NETLIFYKEY" \
      --data-binary "@website.zip" \
