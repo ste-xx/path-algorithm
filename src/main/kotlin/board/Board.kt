@@ -3,7 +3,7 @@ package board
 import tiles.*
 import kotlin.reflect.KClass
 
-class Board private constructor(private val ui: BoardUi, val initializer: Board.BoardInitializer) {
+class Board private constructor(private val ui: BoardUi, initializer: Board.BoardInitializer) {
 
     class BoardInitException(s: String) : Throwable(s)
     class BoardAccessException(s: String) : Throwable(s)
