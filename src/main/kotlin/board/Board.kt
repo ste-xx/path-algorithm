@@ -3,11 +3,14 @@ package board
 import tiles.*
 import kotlin.reflect.KClass
 
-class Board private constructor(ui: BoardUi, initializer: Board.BoardInitializer) {
+class Board private constructor(private val ui: BoardUi, val initializer: Board.BoardInitializer) {
+
+    class BoardInitException(s: String) : Throwable(s)
+    class BoardAccessException(s: String) : Throwable(s)
+    class BoardPathException(s: String) : Throwable(s)
+    class BoardSetException(s: String) : Throwable(s)
 
     data class BoardSize(val width: Int, val height: Int) {
-        constructor(tiles: Array<Array<Tile>>) : this(tiles.size, tiles[0].size)
-
         internal fun isInBoard(position: Position): Boolean = (position.x < width && position.y < height) && (position.x >= 0 && position.y >= 0)
     }
 
@@ -15,55 +18,33 @@ class Board private constructor(ui: BoardUi, initializer: Board.BoardInitializer
         fun toList(): List<Tile> = listOf(top, right, bottom, left)
     }
 
-    data class BoardInitializer(val size: BoardSize, val producer: (x: Int, y: Int) -> Tile) {
-        internal fun create() = Array(size.width) { x ->
-            Array(size.height) { y ->
-                producer(x, y)
+    class BoardInitializer(val size: BoardSize, val producer: (x: Int, y: Int) -> Tile) {
+        internal fun create(): Array<Array<Tile>> {
+            when {
+                size.width <= 0 -> throw BoardInitException("Width is smaller/equals to Zero")
+                size.height <= 0 -> throw BoardInitException("Height is smaller/equals to Zero")
             }
-        }
-    }
 
-    class BoardInitException(s: String) : Throwable(s)
-    class BoardAccessException(s: String) : Throwable(s)
-    class BoardPathException(s: String) : Throwable(s)
-    class BoardSetException(s: String) : Throwable(s)
-
-    private val tiles: Array<Array<Tile>> = initializer.create()
-    private val boardSize: BoardSize
-    private val ui: BoardUi
-
-    init {
-
-        if (tiles.isEmpty())
-            throw BoardInitException("Outer Array is empty")
-        //check all tiles have same size
-        if (tiles[0].isEmpty()) {
-            throw BoardInitException("Inner Array is empty: $tiles[0]")
-        }
-
-        tiles.forEachIndexed { x, innerTiles ->
-            innerTiles.forEachIndexed { y, tile ->
-                if (tile.position != Position(x, y)) {
-                    throw BoardInitException("Misconfiguration of Tiles: TilePos: ${tile.position} != ${Position(x, y)}")
+            return Array(size.width) { x ->
+                Array(size.height) { y ->
+                    val tile = producer(x, y)
+                    when {
+                        tile.position != Position(x, y) -> throw BoardInitException("Misconfiguration of Tiles: TilePos: ${tile.position} != ${Position(x, y)}")
+                        else -> tile
+                    }
                 }
             }
         }
+    }
 
-        tiles.reduce { p, c ->
-            when {
-                p.size != c.size -> throw BoardInitException("Columns does not have same size: ${p.size} != ${c.size}")
-                else -> c
-            }
-        }
+    private val tiles: Array<Array<Tile>> = initializer.create()
+    private val boardSize: BoardSize = initializer.size
 
-        boardSize = BoardSize(tiles);
+    init {
         ui.draw(tiles)
-        this.ui = ui
-
     }
 
     companion object Factory {
-
 
         fun createEmpty(ui: BoardUi, size: BoardSize) = Board(ui, BoardInitializer(size) { x, y ->
             EmptyTile(x, y)
