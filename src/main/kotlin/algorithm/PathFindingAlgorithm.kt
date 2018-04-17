@@ -7,8 +7,9 @@ interface PathFindingAlgorithm {
 
     data class PathFindingResult(val solved: Boolean, val path: Path)
 
-    suspend fun solveWithoutDelay(board: Board): PathFindingAlgorithm.PathFindingResult = solve(board, 0, 0)
+    suspend fun solveWithoutDelay(board: Board): PathFindingAlgorithm.PathFindingResult = solve(board, 0)
 
-    suspend fun solve(board: Board, initialWait: Int = 1000, drawWait: Int = 50): PathFindingAlgorithm.PathFindingResult
+    suspend fun solve(board: Board, drawWait: Int = 50): PathFindingAlgorithm.PathFindingResult
 
+    val name:String
 }

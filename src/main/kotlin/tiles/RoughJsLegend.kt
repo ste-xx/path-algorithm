@@ -1,5 +1,6 @@
 package tiles
 
+import FOOTER_AND_HEADER_SIZE
 import external.Rough
 import external.RoughCanvas
 import org.w3c.dom.HTMLCanvasElement
@@ -20,7 +21,7 @@ object RoughJsLegend : LegendUi {
 
     init {
 
-        adjustSize(initCall = true)
+        adjustSize()
         legend = Rough.canvas(legendCanvas)
         kindOfTiles = listOf(EmptyTile(-1, -1),
                 StartTile(-1, -1),
@@ -29,38 +30,12 @@ object RoughJsLegend : LegendUi {
                 VisitedTile(-1, -1),
                 WallTile(-1, -1))
         draw()
-        window.requestAnimationFrame(::adjustSize)
-
     }
 
-    private fun adjustSize(e: Double = 0.0, initCall: Boolean = false) {
-        val footerAndHeaderSize = 200
-
-
-        val pWidth = legendCanvas.width
-        val pHeight = legendCanvas.height
-////
+    private fun adjustSize() {
         legendCanvas.width = (window.innerWidth / 5)
-        legendCanvas.height = window.innerHeight - footerAndHeaderSize
-
-
-        val cWidth = window.innerWidth / 5
-        val cHeight = window.innerHeight - footerAndHeaderSize
-
-        console.log("$cWidth vs $pWidth")
-//        legendCanvas.width = cWidth
-//        legendCanvas.height = cHeight
-        if (!initCall) {
-            when{
-                pWidth ==0 -> Unit
-             //   pWidth.compareTo(cWidth) != 0 -> draw()
-            }
-       //     window.requestAnimationFrame(::adjustSize)
-
-        }
+        legendCanvas.height = window.innerHeight - FOOTER_AND_HEADER_SIZE
     }
-
-    private fun adjustSize(e: Double = 0.0) = adjustSize(e, false)
 
     override fun draw() {
         val tileSize = calculateTileSize()

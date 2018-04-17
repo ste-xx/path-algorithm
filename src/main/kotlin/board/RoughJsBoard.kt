@@ -1,5 +1,6 @@
 package board
 
+import FOOTER_AND_HEADER_SIZE
 import external.Rough
 import external.RoughCanvas
 import org.w3c.dom.CanvasRenderingContext2D
@@ -17,24 +18,15 @@ object RoughJsBoard : BoardUi {
     val mazeCanvas: HTMLCanvasElement = document.getElementById("maze") as HTMLCanvasElement
 
     init {
-        adjustSize(null)
+        adjustSize()
         maze = Rough.canvas(mazeCanvas)
 //        window.requestAnimationFrame(::adjustSize)
     }
 
 
-    private fun adjustSize(e: Double?){
+    private fun adjustSize(){
         mazeCanvas.width = (window.innerWidth / 5) * 3
-        val footerAndHeaderSize = 200
-        mazeCanvas.height = window.innerHeight - footerAndHeaderSize
-
-        console.log("resize");
-
-        if(e != null) draw( Array(0) { x ->
-            Array(0) { y ->
-                EmptyTile(x, y) as Tile
-            }
-        })
+        mazeCanvas.height = window.innerHeight - FOOTER_AND_HEADER_SIZE
     }
 
 

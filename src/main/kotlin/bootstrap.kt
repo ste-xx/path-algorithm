@@ -1,33 +1,39 @@
 import algorithm.BreathFirstSearch
+import algorithm.Dijkstra
 import algorithm.PathFindingAlgorithm
-
 import board.Board
-import board.angleLevelWithGoalOn_x13_y3
-import kotlinx.coroutines.experimental.launch
 import board.BoardUi
 import board.RoughJsBoard
+import board.angleLevelWithGoalOn_x13_y3
+import kotlinx.coroutines.experimental.launch
 import tiles.LegendUi
 import tiles.RoughJsLegend
 
 
+
+const val FOOTER_AND_HEADER_SIZE = 200
+
 object Bootstrap {
 
-    fun bootstrap(boardUi: BoardUi,
+    fun bootstrap(controlUi: ControlUi,
+                  boardUi: BoardUi,
                   legendUi: LegendUi,
                   boardFactory: (BoardUi) -> Board,
-                  algorithm: PathFindingAlgorithm) {
+                  algorithms: List<PathFindingAlgorithm>) {
         launch {
             val board = boardFactory(boardUi)
             legendUi.draw()
-            algorithm.solve(board)
+            controlUi.draw(board = board, algorithms = algorithms)
         }
     }
 
     fun bootstrapJS() {
-        bootstrap(boardUi = RoughJsBoard,
+        bootstrap(
+                controlUi = RoughJsControl,
+                boardUi = RoughJsBoard,
                 legendUi = RoughJsLegend,
                 boardFactory = Board.Factory::angleLevelWithGoalOn_x13_y3,
-                algorithm = BreathFirstSearch())
+                algorithms = listOf(BreathFirstSearch(), Dijkstra()))
     }
 
 }

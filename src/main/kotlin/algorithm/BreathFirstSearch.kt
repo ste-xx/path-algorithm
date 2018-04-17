@@ -6,7 +6,7 @@ import board.Board
 import kotlinx.coroutines.experimental.delay
 import tiles.*
 
-class BreathFirstSearch : PathFindingAlgorithm {
+class BreathFirstSearch(override val name: String="BFS") : PathFindingAlgorithm {
 
     data class Entry(val position: Position, val previous: Entry?) {
 
@@ -21,9 +21,7 @@ class BreathFirstSearch : PathFindingAlgorithm {
 
     }
 
-    override suspend fun solve(board: Board, initialWait: Int, drawWait: Int): PathFindingResult {
-
-        delay(initialWait)
+    override suspend fun solve(board: Board, drawWait: Int): PathFindingResult {
 
         val startTile: Tile = board.findStart()
         val rest = Queue(Entry(startTile.position, null))
