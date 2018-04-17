@@ -5,9 +5,6 @@ import external.Rough
 import external.RoughCanvas
 import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
-import org.w3c.dom.events.Event
-import tiles.EmptyTile
-import tiles.RoughJsLegend
 import tiles.Tile
 import kotlin.browser.document
 import kotlin.browser.window
@@ -56,7 +53,7 @@ object RoughJsBoard : BoardUi {
             tiles.size < tiles[0].size -> tiles.size
             else -> tiles[0].size
         }
-        return minCanvasLength / minTileLengh;
+        return minCanvasLength / minTileLengh
     }
 
 }

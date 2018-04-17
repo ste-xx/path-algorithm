@@ -50,7 +50,7 @@ object RoughJsLegend : LegendUi {
             val yPositionOfTile = yOffset + gap * index + tileSize * index
             legend.rectangle(centerTiles, yPositionOfTile, tileSize, tileSize, tile.shapeOptions)
 
-            val adjustToBottem = tileSize;
+            val adjustToBottem = tileSize
             val descriptionElement = (legendDescriptions[index] as HTMLElement)
             descriptionElement.style.top = "${yPositionOfTile + adjustToBottem}px"
 
@@ -61,5 +61,5 @@ object RoughJsLegend : LegendUi {
 
     }
 
-    private fun calculateTileSize() = (legendCanvas.height / (kindOfTiles.size)) / 2;
+    private fun calculateTileSize() = (legendCanvas.height / (kindOfTiles.size)) / 2
 }

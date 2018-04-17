@@ -2,8 +2,7 @@ package algorithm
 
 import algorithm.PathFindingAlgorithm.PathFindingResult
 import board.Board
-import kotlinx.coroutines.experimental.delay
-import tiles.*
+import tiles.Path
 
 class Dijkstra(override val name: String = "Dijkstra") : PathFindingAlgorithm {
 

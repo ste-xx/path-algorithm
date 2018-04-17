@@ -26,6 +26,14 @@
             position: absolute;
         }
 
+        .controlElement{
+            position: absolute;
+            z-index: 2;
+        }
+
+        #control{
+            z-index: 1;
+        }
         .container {
             display: flex;
             margin-top: 25px;
@@ -36,7 +44,9 @@
 
 <div class="header">Pathfinding Algorithm</div>
 <div class="container">
-    <div style="width:calc(100vw/5)">CONTROL</div>
+    <div style="position: relative">
+        <canvas id="control" width="0" height="0"></canvas>
+    </div>
     <canvas id="maze" width="0" height="0"></canvas>
     <div style="position: relative">
         <div class="legendDescription emptyTile">Empty</div>

@@ -41,7 +41,7 @@ private fun HTMLCanvasElement.addSolveAlgorithmBtn(index: Int, pair: Pair<PathFi
 private fun HTMLCanvasElement.addSolveAlgorithmBtn(index: Int, algo: PathFindingAlgorithm, board: Board) =
         this.createSibling(document.createSolveAlgorithmButton(algo, board, index))
 
-private fun HTMLCanvasElement.addHeader() = this.createSibling(document.createHeader());
+private fun HTMLCanvasElement.addHeader() = this.createSibling(document.createHeader())
 
 
 private fun RoughCanvas.addBtnBoarderAndFill(index: Int, e: Element) =
