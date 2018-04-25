@@ -1,4 +1,5 @@
 import algorithm.BreathFirstSearch
+import algorithm.DepthFirstSearch
 import algorithm.Dijkstra
 import algorithm.PathFindingAlgorithm
 import board.Board
@@ -33,7 +34,7 @@ object Bootstrap {
                 boardUi = RoughJsBoard,
                 legendUi = RoughJsLegend,
                 boardFactory = Board.Factory::angleLevelWithGoalOn_x13_y3,
-                algorithms = listOf(BreathFirstSearch(), Dijkstra()))
+                algorithms = listOf(BreathFirstSearch(),DepthFirstSearch(), Dijkstra()))
     }
 
 }

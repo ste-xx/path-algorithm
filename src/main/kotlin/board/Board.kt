@@ -69,6 +69,7 @@ class Board private constructor(private val ui: BoardUi, initializer: Board.Boar
 
     fun getTileOn(supplier: () -> Position) = getTileOn(supplier())
     fun getTileOn(x: Int, y: Int) = getTileOn({ Position(x, y) })
+    fun getAllTiles():List<Tile> = tiles.flatten()
 
     private fun setTile(tile: Tile) = when {
         boardSize.isInBoard(tile.position) -> tiles[tile.position.x][tile.position.y] = tile
