@@ -5,7 +5,6 @@ import external.Rough
 import external.RoughCanvas
 import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.HTMLElement
-import org.w3c.dom.events.Event
 import org.w3c.dom.get
 import kotlin.browser.document
 import kotlin.browser.window

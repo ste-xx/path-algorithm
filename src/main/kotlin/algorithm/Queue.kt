@@ -20,17 +20,10 @@ class Queue<T>(vararg entries: T) {
         this.items.addAll(element)
     }
 
-    fun dequeue(): T? {
-        if (this.isEmpty()) {
-            return null
-        } else {
-            return this.items.removeAt(0)
-        }
+    fun dequeue(): T? = when {
+        this.isEmpty() -> null
+        else -> this.items.removeAt(0)
     }
 
-    fun peek(): T? {
-        return this.items[0]
-    }
-
-
+    fun peek(): T? = this.items[0]
 }

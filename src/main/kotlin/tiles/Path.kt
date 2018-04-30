@@ -6,10 +6,7 @@ class Path(vararg positions: Position) {
     constructor(x: Int, y: Int) : this(Position(x, y))
 
     companion object Factory {
-        private val EMPTY_PATH = Path()
-        fun createEmpty(): Path {
-            return EMPTY_PATH
-        }
+        public val EMPTY_PATH = Path()
     }
 
     val positions: List<Position>

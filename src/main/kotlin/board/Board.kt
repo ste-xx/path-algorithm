@@ -16,6 +16,7 @@ class Board private constructor(private val ui: BoardUi, initializer: Board.Boar
 
     data class NeighbourTiles(val top: Tile, val right: Tile, val bottom: Tile, val left: Tile) {
         fun toList(): List<Tile> = listOf(top, right, bottom, left)
+        operator fun iterator() = this.toList().iterator()
     }
 
     class BoardInitializer(val size: BoardSize, val producer: (x: Int, y: Int) -> Tile) {

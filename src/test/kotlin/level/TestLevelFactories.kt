@@ -1,10 +1,14 @@
 package level
 
+import algorithm.PathFindingAlgorithm
+import algorithm.PathFindingAlgorithm.PathFindingResult
 import board.Board
 import board.Board.*
 import tiles.Position
 import tiles.*
 import board.ConsoleBoard
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 
 fun Board.Factory.createWithConsoleUi(initializer: BoardInitializer) = create(ConsoleBoard, initializer)
@@ -37,6 +41,27 @@ fun shortestPathForAngleLevelWithGoalOn_x13_y3(withStartTile: Boolean = true): L
     val topLine = (10 downTo 3).map { Position(13, it) }
 
     return startTile + bottomLine + topLine
+}
+
+fun shortestPathForAngleLevelWithGoalOn_x13_y3B(withStartTile: Boolean = true): List<Position> {
+    val startTile = if (withStartTile) listOf(Position(2, 11)) else listOf()
+    val bottomLine = (3..12).map { Position(it, 11) }
+    val topLine = (11 downTo 3).map { Position(13, it) }
+
+    return startTile + bottomLine + topLine
+}
+
+fun shortestPathValidatorFor_x13_y3(result: PathFindingResult, withStartTile: Boolean = true): Boolean {
+    assertTrue(result.solved)
+
+    val possibleResults = listOf(shortestPathForAngleLevelWithGoalOn_x13_y3(withStartTile),
+            shortestPathForAngleLevelWithGoalOn_x13_y3B(withStartTile))
+//    assertEquals(possibleResults[0].size, possibleResults[1].size)
+
+    assertEquals(possibleResults[0].size, result.path.size, "Shortest path is not correct")
+    return possibleResults.find {
+        it.containsAll(result.path.positions)
+    } != null
 }
 
 

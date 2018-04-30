@@ -20,8 +20,8 @@ class DepthFirstSearch(override val name: String="DFS[Fail]") : PathFindingAlgor
     override suspend fun solve(board: Board, drawWait: Int): PathFindingAlgorithm.PathFindingResult {
 
         class Entry(val previous: List<IEntry>, val tile: Tile, var steps: Int = 0) : IEntry {
-            override fun getTile(): Tile = tile;
-            override fun getPrevious(): List<IEntry> = previous;
+            override fun getTile(): Tile = tile
+            override fun getPrevious(): List<IEntry> = previous
 
             override suspend fun solve(): EntryData {
                 delay(drawWait)

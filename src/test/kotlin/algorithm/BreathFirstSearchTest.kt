@@ -12,27 +12,13 @@ class BreathFirstSearchTest {
 
     @Test
     fun should_solve_angle_level(): dynamic = runAsyncTest {
-
-        val bfs = BreathFirstSearch()
-        val board = Board.angleLevelWithGoalOn_x13_y3()
-
-        val expectedPath = shortestPathForAngleLevelWithGoalOn_x13_y3()
-
-        val result = bfs.solveWithoutDelay(board)
-        assertTrue(result.solved)
-        assertEquals(expectedPath.size, result.path.size)
-        for (position in result.path) {
-            assertTrue(expectedPath.contains(position))
-        }
-
+        val result = BreathFirstSearch().solveWithoutDelay(Board.angleLevelWithGoalOn_x13_y3())
+        assertTrue(shortestPathValidatorFor_x13_y3(result,withStartTile = true))
     }
 
     @Test
     fun should_return_false_for_unsolvable_maze(): dynamic = runAsyncTest {
-        val bfs = BreathFirstSearch()
-        val board = Board.unsolvableWallLevel()
-
-        val result = bfs.solveWithoutDelay(board)
+        val result = BreathFirstSearch().solveWithoutDelay( Board.unsolvableWallLevel())
         assertFalse(result.solved)
         assertEquals(0, result.path.size)
     }
