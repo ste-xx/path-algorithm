@@ -6,7 +6,7 @@ import board.Board
 import kotlinx.coroutines.experimental.delay
 import tiles.*
 
-class BreathFirstSearch(override val name: String="BFS") : PathFindingAlgorithm {
+class BreathFirstSearch(override val name: String = "BFS") : PathFindingAlgorithm {
 
     data class Entry(val position: Position, val previous: Entry?) {
 
@@ -45,7 +45,7 @@ class BreathFirstSearch(override val name: String="BFS") : PathFindingAlgorithm 
 
 
             val movableNeighbours = board.getNeighboursOn(entry.position).toList()
-                    .filter { it is GoalTile || it is EmptyTile || it is WatchedTile }
+                    .filter { (it !is VisitedTile) && (it is GoalTile || it is WalkableTile) }
                     .filterNot { rest.items.map { it.position }.contains(it.position) } //fuck, better track locally
 
 

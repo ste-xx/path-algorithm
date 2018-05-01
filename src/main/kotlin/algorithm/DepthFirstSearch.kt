@@ -31,7 +31,7 @@ class DepthFirstSearch(override val name: String="DFS[Fail]") : PathFindingAlgor
                 return when {
                     this.tile is GoalTile -> EntryData(true, this, steps)
 
-//                    this.tile is VisitedTile -> Entry(false, this, steps)
+//                    this.tile is VisitedEmptyTile -> Entry(false, this, steps)
                     this.tile is StartTile || this.tile is WalkableTile -> {
                         val neighbours = board.getNeighboursOn(this.tile.position).toList()
                         neighbours.filter { it is WalkableTile || it is GoalTile }

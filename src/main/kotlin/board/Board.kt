@@ -14,7 +14,7 @@ class Board private constructor(private val ui: BoardUi, initializer: Board.Boar
         internal fun isInBoard(position: Position): Boolean = (position.x < width && position.y < height) && (position.x >= 0 && position.y >= 0)
     }
 
-    data class NeighbourTiles(val top: Tile, val right: Tile, val bottom: Tile, val left: Tile):Iterable<Tile> {
+    data class NeighbourTiles(val top: Tile, val right: Tile, val bottom: Tile, val left: Tile) : Iterable<Tile> {
         fun toList(): List<Tile> = listOf(top, right, bottom, left)
         override operator fun iterator() = this.toList().iterator()
     }
@@ -70,7 +70,7 @@ class Board private constructor(private val ui: BoardUi, initializer: Board.Boar
 
     fun getTileOn(supplier: () -> Position) = getTileOn(supplier())
     fun getTileOn(x: Int, y: Int) = getTileOn({ Position(x, y) })
-    fun getAllTiles():List<Tile> = tiles.flatten()
+    fun getAllTiles(): List<Tile> = tiles.flatten()
 
     private fun setTile(tile: Tile) = when {
         boardSize.isInBoard(tile.position) -> tiles[tile.position.x][tile.position.y] = tile
@@ -103,13 +103,20 @@ class Board private constructor(private val ui: BoardUi, initializer: Board.Boar
         )
 
         neighbours.toList()
-                .filter { it is EmptyTile }
-                .map { WatchedTile(it.position) }
+                .filter { it is WalkableTile }
+                .map {
+                    when (it) {
+                        is EmptyTile -> WatchedEmptyTile(it)
+                        is MudTile -> WatchedMudTile(it)
+                        else -> it
+                    }
+                }
                 .forEach(this::setTile)
 
         val visitedTile = this.getTileOn(position)
         when (visitedTile) {
-            is WalkableTile -> this.setTile(VisitedTile(visitedTile.position))
+            is EmptyTile, is WatchedEmptyTile -> this.setTile(VisitedEmptyTile(visitedTile))
+            is MudTile, is WatchedMudTile -> this.setTile(VisitedMudTile(visitedTile))
         }
 
         drawUi()

@@ -2,10 +2,7 @@ import algorithm.BreathFirstSearch
 import algorithm.DepthFirstSearch
 import algorithm.Dijkstra
 import algorithm.PathFindingAlgorithm
-import board.Board
-import board.BoardUi
-import board.RoughJsBoard
-import board.angleLevelWithGoalOn_x13_y3
+import board.*
 import kotlinx.coroutines.experimental.launch
 import tiles.LegendUi
 import tiles.RoughJsLegend
@@ -33,7 +30,7 @@ object Bootstrap {
                 controlUi = RoughJsControl,
                 boardUi = RoughJsBoard,
                 legendUi = RoughJsLegend,
-                boardFactory = Board.Factory::angleLevelWithGoalOn_x13_y3,
+                boardFactory = Board.Factory::angleLevelWithGoalOn_x13_y3WithMud,
                 algorithms = listOf(BreathFirstSearch(),DepthFirstSearch(), Dijkstra()))
     }
 

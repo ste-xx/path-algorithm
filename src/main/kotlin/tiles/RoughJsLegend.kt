@@ -22,12 +22,16 @@ object RoughJsLegend : LegendUi {
 
         adjustSize()
         legend = Rough.canvas(legendCanvas)
-        kindOfTiles = listOf(EmptyTile(-1, -1),
+        kindOfTiles = listOf(
                 StartTile(-1, -1),
                 GoalTile(-1, -1),
-                WatchedTile(-1, -1),
-                VisitedTile(-1, -1),
-                WallTile(-1, -1))
+                WallTile(-1, -1),
+                EmptyTile(-1, -1),
+                WatchedEmptyTile(-1, -1),
+                VisitedEmptyTile(-1, -1),
+                MudTile(-1,-1),
+                WatchedMudTile(-1,-1),
+                VisitedMudTile(-1,-1))
         draw()
     }
 
