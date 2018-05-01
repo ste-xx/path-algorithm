@@ -14,9 +14,9 @@ class Board private constructor(private val ui: BoardUi, initializer: Board.Boar
         internal fun isInBoard(position: Position): Boolean = (position.x < width && position.y < height) && (position.x >= 0 && position.y >= 0)
     }
 
-    data class NeighbourTiles(val top: Tile, val right: Tile, val bottom: Tile, val left: Tile) {
+    data class NeighbourTiles(val top: Tile, val right: Tile, val bottom: Tile, val left: Tile):Iterable<Tile> {
         fun toList(): List<Tile> = listOf(top, right, bottom, left)
-        operator fun iterator() = this.toList().iterator()
+        override operator fun iterator() = this.toList().iterator()
     }
 
     class BoardInitializer(val size: BoardSize, val producer: (x: Int, y: Int) -> Tile) {
