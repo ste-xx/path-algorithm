@@ -20,6 +20,9 @@ fun Board.Factory.angleLevelWithGoalOn_x13_y3WithMud(ui: BoardUi) =
                 (x == 13) and (y == 3) -> GoalTile(x, y)
                 (x in 3..12) and (y == 3) -> WallTile(x, y)
                 (x == 12) and (y in 3..9) -> WallTile(x, y)
+                (x in 13..14) and (y == 7) -> MudTile(x, y)
+                (x == 13) and (y == 5) -> MudTile(x, y)
+
                 (x == 12) and (y in 10..12) -> MudTile(x, y)
                 (x == 2) and (y == 11) -> StartTile(x, y)
                 else -> EmptyTile(x, y)

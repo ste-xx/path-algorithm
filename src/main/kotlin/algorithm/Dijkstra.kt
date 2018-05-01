@@ -4,10 +4,7 @@ import algorithm.Dijkstra.Distance.ConstDistances.UNKNOWN
 import algorithm.PathFindingAlgorithm.PathFindingResult
 import board.Board
 import kotlinx.coroutines.experimental.delay
-import tiles.Path
-import tiles.Position
-import tiles.Tile
-import tiles.WallTile
+import tiles.*
 
 
 operator fun Dijkstra.Distance.plus(other: Int) = Dijkstra.Distance(this.distance + other)
@@ -140,6 +137,7 @@ class Dijkstra(override val name: String = "Dijkstra") : PathFindingAlgorithm {
                     .forEach {
                         when (it) {
                             is WallTile -> set.updateEntryToVisited(it.position)
+                            is MudTile, is VisitedMudTile, is WatchedMudTile -> set.calculateCost(newVisited, it.position, 2)
                             else -> set.calculateCost(newVisited, it.position)
                         }
                     }
